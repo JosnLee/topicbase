@@ -1,0 +1,69 @@
+stuApp.controller("stuController", function stuController($scope, $http) {
+    $scope.stu={stuId:"",stuName:"",englishName:"",gender:"",photo:"",idCard:"",stuPwd:"",classes:""}
+    var baseUrl = Path.getUri("api/")
+
+    $scope.getAllCollege = function () {
+        $http.get(baseUrl + "college/all").success(function (data) {
+            $scope.CollegeAll = data;
+            $scope.college = $scope.CollegeAll[0];
+             $scope.getStuByCollegeId($scope.college);
+        })
+    }
+    $scope.getStuByCollegeId=function(college){
+        $scope.college=college;
+        $http.get(baseUrl+"stu/stu-collegeId/"+$scope.college.collegeId).success(function(data){
+          $scope.stus=data;
+
+        })
+    }
+    $scope.deleteIconClick=function(stu){
+        $http.delete(baseUrl+"stu/"+stu.stuId).success(function(){
+            $scope.getAllCollege();
+        })
+    }
+    $scope.deleteStus=function(){
+        var stuIds=[];
+        $scope.stus.forEach(function(stu){
+            if(stu.item){
+             stuIds.push(stu.stuId);
+            }
+        })
+       $http.post(baseUrl+"stu/delete",stuIds).success(function(){
+           $scope.getAllCollege();
+       })
+    }
+    $scope.getAllClasses=function(){
+        $http.get(baseUrl+"classes/all").success(function(data){
+            $scope.classAll=data;
+        })
+    }
+    $scope.updateIconClick=function(stu){
+        $scope.getStuByCollegeId($scope.college);
+        $scope.stuId=stu.stuId;
+        $scope.stuName=stu.stuName;
+        $scope.gender=stu.gender;
+        $scope.idCard=stu.idCard;
+        $scope.photo=stu.photo;
+        $scope.classId=stu.classes;
+        $scope.getAllClasses();
+    }
+
+    $scope.sureButtonClick=function(){
+        $("#myModal").modal("hide");
+        $scope.getStuByCollegeId($scope.college);
+
+    }
+
+    $scope.addButtonClick=function(){
+        $scope.stuId="";
+        $scope.stuName="";
+        $scope.gender="";
+        $scope.idCard="";
+        $scope.photo="dog.jpg" ;
+        $scope.getAllClasses();
+    }
+
+
+    $scope.getAllCollege();
+
+})
