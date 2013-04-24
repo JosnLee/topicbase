@@ -1,0 +1,190 @@
+/*
+ * To change this template, choose Tools | Templates
+ * and open the template in the editor.
+ */
+package com.hebeinu.lee.domain.entity;
+
+import java.io.Serializable;
+import java.util.Collection;
+import javax.persistence.Basic;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.NamedQueries;
+import javax.persistence.NamedQuery;
+import javax.persistence.OneToMany;
+import javax.persistence.Table;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
+import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.XmlTransient;
+
+/**
+ *
+ * @author lee
+ */
+@Entity
+@Table(name = "TEACHERS")
+@XmlRootElement
+public class Teachers implements Serializable {
+    private static final long serialVersionUID = 1L;
+    @Id
+    @Basic(optional = false)
+    @NotNull
+    @Size(min = 1, max = 18)
+    @Column(name = "TEACHER_ID")
+    private String teacherId;
+    @Size(max = 18)
+    @Column(name = "TEACHER_NAME")
+    private String teacherName;
+    @Size(max = 18)
+    @Column(name = "ENGLISH_NAME")
+    private String englishName;
+    @Size(max = 18)
+    @Column(name = "GENDER")
+    private String gender;
+   @Column(name = "PHOTO")
+    private String photo;
+    @Size(max = 1000)
+    @Column(name = "NOTE")
+    private String note;
+
+    public String getTeacherType() {
+        return teacherType;
+    }
+
+    public void setTeacherType(String teacherType) {
+        this.teacherType = teacherType;
+    }
+
+    @Size(max = 18)
+    @Column(name = "TEACHER_TYPE")
+    private String teacherType;
+    @Size(max = 18)
+    @Column(name = "TEACHER_PWD")
+    private String teacherPwd;
+    @JoinColumn(name = "GROUP_ID", referencedColumnName = "GROUP_ID")
+    @ManyToOne
+    private ReplyGroup groupId;
+    @JoinColumn(name = "FACULTY_ID", referencedColumnName = "FACULTY_ID")
+    @ManyToOne
+    private Faculty facultyId;
+    @OneToMany(mappedBy = "teacherId")
+    private Collection<TopicNameList> topicNameListCollection;
+
+    public Teachers() {
+    }
+
+    public Teachers(String teacherId) {
+        this.teacherId = teacherId;
+    }
+
+    public String getTeacherId() {
+        return teacherId;
+    }
+
+    public void setTeacherId(String teacherId) {
+        this.teacherId = teacherId;
+    }
+
+    public String getTeacherName() {
+        return teacherName;
+    }
+
+    public void setTeacherName(String teacherName) {
+        this.teacherName = teacherName;
+    }
+
+    public String getEnglishName() {
+        return englishName;
+    }
+
+    public void setEnglishName(String englishName) {
+        this.englishName = englishName;
+    }
+
+    public String getGender() {
+        return gender;
+    }
+
+    public void setGender(String gender) {
+        this.gender = gender;
+    }
+
+    public String getPhoto() {
+        return photo;
+    }
+
+    public void setPhoto(String photo) {
+        this.photo = photo;
+    }
+
+    public String getNote() {
+        return note;
+    }
+
+    public void setNote(String note) {
+        this.note = note;
+    }
+
+    public String getTeacherPwd() {
+        return teacherPwd;
+    }
+
+    public void setTeacherPwd(String teacherPwd) {
+        this.teacherPwd = teacherPwd;
+    }
+
+      public ReplyGroup getGroupId() {
+        return groupId;
+    }
+
+    public void setGroupId(ReplyGroup groupId) {
+        this.groupId = groupId;
+    }
+
+    public Faculty getFacultyId() {
+        return facultyId;
+    }
+
+    public void setFacultyId(Faculty facultyId) {
+        this.facultyId = facultyId;
+    }
+
+    @XmlTransient
+    public Collection<TopicNameList> getTopicNameListCollection() {
+        return topicNameListCollection;
+    }
+
+    public void setTopicNameListCollection(Collection<TopicNameList> topicNameListCollection) {
+        this.topicNameListCollection = topicNameListCollection;
+    }
+
+    @Override
+    public int hashCode() {
+        int hash = 0;
+        hash += (teacherId != null ? teacherId.hashCode() : 0);
+        return hash;
+    }
+
+    @Override
+    public boolean equals(Object object) {
+        // TODO: Warning - this method won't work in the case the id fields are not set
+        if (!(object instanceof Teachers)) {
+            return false;
+        }
+        Teachers other = (Teachers) object;
+        if ((this.teacherId == null && other.teacherId != null) || (this.teacherId != null && !this.teacherId.equals(other.teacherId))) {
+            return false;
+        }
+        return true;
+    }
+
+    @Override
+    public String toString() {
+        return "com.Teachers[ teacherId=" + teacherId + " ]";
+    }
+    
+}
