@@ -17,8 +17,7 @@ stuApp.controller("stuController", function stuController($scope, $http) {
         })
     }
     $scope.deleteIconClick=function(stu){
-        $http.delete(baseUrl+"stu/"+stu.stuId).success(function(){
-            $scope.getAllCollege();
+        $http.delete(baseUrl+"stu/"+stu.stuId).succes
         })
     }
     $scope.deleteStus=function(){
